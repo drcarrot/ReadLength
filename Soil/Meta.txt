@@ -1,0 +1,16 @@
+	Study	Environment	Environment_Sub	Extraction_Kit	DNA_Fragment	Time_since_dist	Disturbance	Experimental_Unit_ID	Selective_Factor	Legacy	Keep
+Ines-Groeningen-C3-1	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	-0.1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-C3-3	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	-0.1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-E3-1	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	-0.1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-E3-4	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	-0.1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-E5-1	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-E5-3	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-E6-3	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	4	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-E6-5	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	4	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-F3-4	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	-0.1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-F5-1	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-F5-3	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-F5-5	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	1	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-F6-1	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	4	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-F6-2	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	4	1Heat	NA	Death	NA	TRUE
+Ines-Groeningen-F6-3	Jurburg_Microcosm	Soil_Microcosm	Soil	MOBIO_Powersoil	515F_806R	4	1Heat	NA	Death	NA	TRUE

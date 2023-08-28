@@ -1,0 +1,16 @@
+	Study	Environment	Environment_Sub	Extraction_Kit	DNA_Fragment	Time_since_dist	Disturbance	Experimental_Unit_ID	Selective_Factor	Legacy	Keep
+276.013_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	-5	Clin	9548	Death	NA	TRUE
+276.014_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	-5	Clin	9549	Death	NA	TRUE
+276.015_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	-5	Clin	9550	Death	NA	TRUE
+276.016_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	-5	Clin	9551	Death	NA	TRUE
+276.017_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	-5	Clin	9552	Death	NA	TRUE
+276.049_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	1	Clin	9548	Death	NA	TRUE
+276.050_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	1	Clin	9549	Death	NA	TRUE
+276.051_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	1	Clin	9550	Death	NA	TRUE
+276.052_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	1	Clin	9551	Death	NA	TRUE
+276.053_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	1	Clin	9552	Death	NA	TRUE
+276.205_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	4	Clin	9548	Death	NA	TRUE
+276.206_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	4	Clin	9549	Death	NA	TRUE
+276.207_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	4	Clin	9550	Death	NA	TRUE
+276.208_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	4	Clin	9551	Death	NA	TRUE
+276.209_R1	Jurburg_Pigs	Mammal	Pig_feces	AGOWA	515F_806R	4	Clin	9552	Death	NA	TRUE

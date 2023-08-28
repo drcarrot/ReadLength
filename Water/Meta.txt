@@ -1,0 +1,16 @@
+	Study	Environment	Environment_Sub	Extraction_Kit	DNA_Fragment	Time_since_dist	Disturbance	Experimental_Unit_ID	Selective_Factor	Legacy	Keep
+DRR070527.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	-1	Cadmium_PAH	Origin1	NA	NA	TRUE
+DRR070528.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	-1	Cadmium_PAH	Origin2	NA	NA	TRUE
+DRR070529.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	-1	Cadmium_PAH	Origin3	NA	NA	TRUE
+DRR070530.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	-1	Cadmium_PAH	Origin4	NA	NA	TRUE
+DRR070531.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	-1	Cadmium_PAH	Origin5	NA	NA	TRUE
+DRR070552.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	1	Cadmium_PAH	Mix1	Metal	NA	TRUE
+DRR070553.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	1	Cadmium_PAH	Mix2	Metal	NA	TRUE
+DRR070554.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	1	Cadmium_PAH	Mix3	Metal	NA	TRUE
+DRR070555.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	1	Cadmium_PAH	Mix4	Metal	NA	TRUE
+DRR070556.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	1	Cadmium_PAH	Mix5	Metal	NA	TRUE
+DRR070577.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	4	Cadmium_PAH	Mix1	Metal	NA	TRUE
+DRR070578.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	4	Cadmium_PAH	Mix2	Metal	NA	TRUE
+DRR070579.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	4	Cadmium_PAH	Mix3	Metal	NA	TRUE
+DRR070580.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	4	Cadmium_PAH	Mix4	Metal	NA	TRUE
+DRR070581.fastq.gz	Qian	Seawater_microcosms	Water	MOBIO_Powersoil	515F_806R	4	Cadmium_PAH	Mix5	Metal	NA	TRUE

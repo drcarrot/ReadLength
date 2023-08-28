@@ -1,0 +1,718 @@
+---
+title: "ReadLength"
+output: html_notebook
+---
+
+Load packages
+```{r}
+require(vegan)
+require(ggplot2)
+require(dplyr)
+require(tidyr)
+require(viridis)
+```
+
+#Water
+
+How does read length affect the percentage of conserved reads?
+```{r}
+Water.meta=read.table("Water/Meta.txt")
+Water.tracking=read.table("Water/tracking_all.txt")
+
+Water.tracking$Time_since_dist=Water.meta$Time_since_dist[match(Water.tracking$row.names, row.names(Water.meta))]
+
+
+Water.preserved.reads=ggplot(Water.tracking[which(Water.tracking$Time_since_dist<0),], aes(x=forward.trim, y=100*Non.chimeric.Reads/Original.Reads))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("% Preserved Reads")+
+  theme_minimal()
+
+Water.tracking %>%
+  group_by(forward.trim) %>%
+  summarise(mean = mean(100*Non.chimeric.Reads/Original.Reads))
+```
+
+
+How does read length affect alpha diversity estimates and rarefaction? 
+```{r}
+Water.rarefaction=read.table("Water/rarefaction.depth.txt")
+Water.rarefaction2=read.table("Water/rarefaction.depth2.txt")
+
+Water.alpha=read.table("Water/alpha.results2.txt", row.names = NULL)
+
+ggplot(Water.rarefaction, aes(x=as.numeric(samplename), y=depth))+
+  geom_line()+
+  xlab("Read Length")+
+  ylab("Consensus rarefaction depth")+
+  theme_minimal()
+
+ggplot(Water.rarefaction2, aes(x=as.numeric(samplename), y=ntaxa))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("ASVs detected")+
+  theme_minimal()
+
+
+ggplot(Water.alpha, aes(x=as.numeric(samplename), y=richness))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("Richness")+
+  ylim(0, 1000)+
+  theme_minimal()
+
+
+ggplot(Water.alpha, aes(x=as.numeric(samplename), y=simpson))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("Inverse Simpson Richness")+
+  ylim(0, 500)+
+  theme_minimal()
+
+```
+
+How does read length affect the number of unclassified ASVS
+```{r}
+Water.Unclassfied=read.table("Water/unclassifieds2.txt", header = TRUE)
+
+Water.Unclassified. =Water.Unclassfied %>% pivot_longer(!samplename, names_to = "Taxonomy", values_to = "unclassified.ASVs")
+Water.Unclassified.$Taxonomy=as.factor(Water.Unclassified.$Taxonomy)
+
+Water.Unclassified.$Taxonomy =  factor(Water.Unclassified.$Taxonomy, levels=c('Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus'))
+  
+Water.Unc=ggplot(Water.Unclassified., aes(x=as.numeric(samplename), y=unclassified.ASVs, color=Taxonomy))+
+         geom_line()+  
+         xlab("Read Length")+
+         ylab("Unclassified taxa")+
+         scale_color_viridis(discrete = T)+
+          theme_minimal()+
+   theme(legend.position = "none")
+```
+
+
+How does read length affect the percentage of the community that is unclassified?
+```{r}
+Water.Unclassfied.percent=read.table("Water/unclassified.percent.txt", header=TRUE)
+
+Water.Unclassified.percent. =Water.Unclassfied.percent %>% pivot_longer(!samplename, names_to = "Taxonomy", values_to = "Proportion.unclassified")
+Water.Unclassified.percent.$Taxonomy=as.factor(Water.Unclassified.percent.$Taxonomy)
+
+Water.Unclassified.percent.$Taxonomy =  factor(Water.Unclassified.percent.$Taxonomy, levels=c('Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus'))
+  
+Water.Uncp=ggplot(Water.Unclassified.percent., aes(x=as.numeric(samplename), y=Proportion.unclassified, color=Taxonomy))+
+         geom_line()+  
+         xlab("Read Length")+
+         ylab("Unclassified taxa (proportion)")+
+         scale_color_viridis(discrete = T)+
+         theme_minimal()+
+  theme(legend.position = "none")
+
+```
+
+#Pig
+
+How does read length affect the percentage of conserved reads?
+```{r}
+Pig.meta=read.table("Pig/Meta.txt")
+Pig.tracking=read.table("Pig/tracking_all.txt")
+
+Pig.tracking$Time_since_dist=Pig.meta$Time_since_dist[match(Pig.tracking$row.names, row.names(Pig.meta))]
+
+
+Pig.preserved.reads=ggplot(Pig.tracking[which(Pig.tracking$Time_since_dist<0),], aes(x=forward.trim, y=100*Non.chimeric.Reads/Original.Reads))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("% Preserved Reads")+
+  theme_minimal()
+
+Pig.preserved.reads
+
+Pig.tracking %>%
+  group_by(forward.trim) %>%
+  summarise(mean = mean(100*Non.chimeric.Reads/Original.Reads))
+```
+How does read length affect alpha diversity estimates and rarefaction? 
+```{r}
+Pig.rarefaction=read.table("Pig/rarefaction.depth.txt")
+Pig.rarefaction2=read.table("Pig/rarefaction.depth2.txt")
+
+Pig.alpha=read.table("Pig/alpha.results2.txt", row.names = NULL)
+
+ggplot(Pig.rarefaction, aes(x=as.numeric(samplename), y=depth))+
+  geom_line()+
+  xlab("Read Length")+
+  ylab("Consensus rarefaction depth")+
+  theme_minimal()
+
+ggplot(Pig.rarefaction2, aes(x=as.numeric(samplename), y=ntaxa))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("ASVs detected")+
+  theme_minimal()
+
+
+ggplot(Pig.alpha, aes(x=as.numeric(samplename), y=richness))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("Richness")+
+  ylim(0, 1000)+
+  theme_minimal()
+
+
+ggplot(Pig.alpha, aes(x=as.numeric(samplename), y=simpson))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("Inverse Simpson Richness")+
+  ylim(0, 500)+
+  theme_minimal()
+```
+
+How does read length affect the number of unclassified ASVS
+```{r}
+Pig.Unclassfied=read.table("Pig/unclassifieds2.txt", header = TRUE)
+#Pig.Unclassfied$ntaxa=Pig.rarefaction2$ntaxa
+
+Pig.Unclassified. =Pig.Unclassfied %>% pivot_longer(!c(samplename), names_to = "Taxonomy", values_to = "unclassified.ASVs")
+
+Pig.Unclassified.$Taxonomy=as.factor(Pig.Unclassified.$Taxonomy)
+
+Pig.Unclassified.$Taxonomy =  factor(Pig.Unclassified.$Taxonomy, levels=c('Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus'))
+  
+Pig.Unc=ggplot(Pig.Unclassified., aes(x=as.numeric(samplename), y=unclassified.ASVs, color=Taxonomy))+
+         geom_line()+  
+         xlab("Read Length")+
+         ylab("Unclassified ASVs")+
+         scale_color_viridis(discrete = T)+
+         theme_minimal()+
+  theme(legend.position = "none")
+```
+
+
+How does read length affect the percentage of the community that is unclassified?
+```{r}
+Pig.Unclassfied.percent=read.table("Pig/unclassified.percent.txt", header=TRUE)
+
+Pig.Unclassified.percent. =Pig.Unclassfied.percent %>% pivot_longer(!samplename, names_to = "Taxonomy", values_to = "Proportion.unclassified")
+Pig.Unclassified.percent.$Taxonomy=as.factor(Pig.Unclassified.percent.$Taxonomy)
+
+Pig.Unclassified.percent.$Taxonomy =  factor(Pig.Unclassified.percent.$Taxonomy, levels=c('Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus'))
+  
+Pig.Uncp=ggplot(Pig.Unclassified.percent., aes(x=as.numeric(samplename), y=Proportion.unclassified, color=Taxonomy))+
+         geom_line()+  
+         xlab("Read Length")+
+         ylab("Unclassified ASVs (proportion)")+
+         scale_color_viridis(discrete = T)+
+         theme_minimal()+
+  ylim(0,1)+
+  theme(legend.position = "none")
+
+```
+
+
+
+#Soil
+
+How does read length affect the percentage of conserved reads?
+```{r}
+Soil.meta=read.table("Soil/Meta.txt")
+Soil.tracking=read.table("Soil/tracking_all.txt")
+
+Soil.tracking$Time_since_dist=Soil.meta$Time_since_dist[match(Soil.tracking$row.names, row.names(Soil.meta))]
+
+
+Soil.preserved.reads=ggplot(Soil.tracking[which(Soil.tracking$Time_since_dist<0),], aes(x=forward.trim, y=100*Non.chimeric.Reads/Original.Reads))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("% Preserved Reads")+
+  theme_minimal()
+
+Soil.preserved.reads
+
+Soil.tracking %>%
+  group_by(forward.trim) %>%
+  summarise(mean = mean(100*Non.chimeric.Reads/Original.Reads))
+```
+How does read length affect alpha diversity estimates and rarefaction? 
+```{r}
+Soil.rarefaction=read.table("Soil/rarefaction.depth.txt")
+Soil.rarefaction2=read.table("Soil/rarefaction.depth2.txt")
+
+Soil.alpha=read.table("Soil/alpha.results2.txt", row.names = NULL)
+
+ggplot(Soil.rarefaction, aes(x=as.numeric(samplename), y=depth))+
+  geom_line()+
+  xlab("Read Length")+
+  ylab("Consensus rarefaction depth")+
+  theme_minimal()
+
+ggplot(Soil.rarefaction2, aes(x=as.numeric(samplename), y=ntaxa))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("ASVs detected")+
+  theme_minimal()
+
+
+ggplot(Soil.alpha, aes(x=as.numeric(samplename), y=richness))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("Richness")+
+  ylim(0, 1000)+
+  theme_minimal()
+
+
+ggplot(Soil.alpha, aes(x=as.numeric(samplename), y=simpson))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("Inverse Simpson Richness")+
+  ylim(0, 500)+
+  theme_minimal()
+
+```
+
+How does read length affect the number of unclassified ASVS
+```{r}
+Soil.Unclassfied=read.table("Soil/unclassifieds2.txt", header = TRUE)
+
+Soil.Unclassified. =Soil.Unclassfied %>% pivot_longer(!samplename, names_to = "Taxonomy", values_to = "unclassified.ASVs")
+Soil.Unclassified.$Taxonomy=as.factor(Soil.Unclassified.$Taxonomy)
+
+Soil.Unclassified.$Taxonomy =  factor(Soil.Unclassified.$Taxonomy, levels=c('Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus'))
+  
+Soil.Unc=ggplot(Soil.Unclassified., aes(x=as.numeric(samplename), y=unclassified.ASVs, color=Taxonomy))+
+         geom_line()+  
+         xlab("Read Length")+
+         ylab("Unclassified ASVs")+
+         scale_color_viridis(discrete = T)+
+         theme_minimal()+ 
+  theme(legend.position = "none")
+```
+
+
+How does read length affect the percentage of the community that is unclassified?
+```{r}
+Soil.Unclassfied.percent=read.table("Soil/unclassified.percent.txt", header=TRUE)
+
+Soil.Unclassified.percent. =Soil.Unclassfied.percent %>% pivot_longer(!samplename, names_to = "Taxonomy", values_to = "Proportion.unclassified")
+Soil.Unclassified.percent.$Taxonomy=as.factor(Soil.Unclassified.percent.$Taxonomy)
+
+Soil.Unclassified.percent.$Taxonomy =  factor(Soil.Unclassified.percent.$Taxonomy, levels=c('Kingdom', 'Phylum', 'Class', 'Order', 'Family', 'Genus'))
+  
+Soil.Uncp=ggplot(Soil.Unclassified.percent., aes(x=as.numeric(samplename), y=Proportion.unclassified, color=Taxonomy))+
+         geom_line()+  
+         xlab("Read Length")+
+         ylab("Unclassified ASVs (proportion)")+
+         scale_color_viridis(discrete = T)+
+         theme_minimal()+ 
+  theme(legend.position = "none")
+
+```
+
+#All together now, rarefaction
+```{r}
+filtered.reads= data.frame(readlength=as.numeric(Water.tracking[which(Water.tracking$Time_since_dist<0),]$forward.trim),
+           Water=Water.tracking[which(Water.tracking$Time_since_dist<0),]$Filtered.Reads/Water.tracking[which(Water.tracking$Time_since_dist<0),]$Original.Reads,
+           Soil=Soil.tracking[which(Soil.tracking$Time_since_dist<0),]$Filtered.Reads/Soil.tracking[which(Soil.tracking$Time_since_dist<0),]$Original.Reads,
+           Pig=Pig.tracking[which(Pig.tracking$Time_since_dist<0),]$Filtered.Reads/Pig.tracking[which(Pig.tracking$Time_since_dist<0),]$Original.Reads)
+
+filtered.reads =filtered.reads %>% pivot_longer(!readlength, names_to = "Environment", values_to = "Preserved")
+
+
+ggplot(filtered.reads, aes(x=readlength, y=Preserved, color=Environment))+
+  geom_point(size=2)+
+  xlab("Read Length")+
+  ylab("% reads preserved")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  theme_minimal()+
+  facet_wrap(~Environment)
+
+Denoised.reads= data.frame(readlength=as.numeric(Water.tracking[which(Water.tracking$Time_since_dist<0),]$forward.trim),
+           Water=Water.tracking[which(Water.tracking$Time_since_dist<0),]$Denoised.Reads/Water.tracking[which(Water.tracking$Time_since_dist<0),]$Original.Reads,
+           Soil=Soil.tracking[which(Soil.tracking$Time_since_dist<0),]$Denoised.Reads/Soil.tracking[which(Soil.tracking$Time_since_dist<0),]$Original.Reads,
+           Pig=Pig.tracking[which(Pig.tracking$Time_since_dist<0),]$Denoised.Reads/Pig.tracking[which(Pig.tracking$Time_since_dist<0),]$Original.Reads)
+
+Denoised.reads =Denoised.reads %>% pivot_longer(!readlength, names_to = "Environment", values_to = "Preserved")
+
+
+ggplot(Denoised.reads, aes(x=readlength, y=Preserved, color=Environment))+
+  geom_point(size=2)+
+  xlab("Read Length")+
+  ylab("% reads preserved")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  theme_minimal()+
+  facet_wrap(~Environment)
+
+
+Non.chimeric.reads= data.frame(readlength=as.numeric(Water.tracking[which(Water.tracking$Time_since_dist<0),]$forward.trim),
+           Water=Water.tracking[which(Water.tracking$Time_since_dist<0),]$Non.chimeric.Reads/Water.tracking[which(Water.tracking$Time_since_dist<0),]$Original.Reads,
+           Soil=Soil.tracking[which(Soil.tracking$Time_since_dist<0),]$Non.chimeric.Reads/Soil.tracking[which(Soil.tracking$Time_since_dist<0),]$Original.Reads,
+           Pig=Pig.tracking[which(Pig.tracking$Time_since_dist<0),]$Non.chimeric.Reads/Pig.tracking[which(Pig.tracking$Time_since_dist<0),]$Original.Reads)
+
+Non.chimeric.reads =Non.chimeric.reads %>% pivot_longer(!readlength, names_to = "Environment", values_to = "Non.chimeric")
+
+
+ggplot(Non.chimeric.reads, aes(x=readlength, y=Non.chimeric, color=Environment))+
+  geom_point(size=2)+
+  xlab("Read Length")+
+  ylab("% reads Non.chimeric")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  theme_minimal()+
+  facet_wrap(~Environment)
+
+
+preserved.reads= data.frame(readlength=as.numeric(Water.tracking[which(Water.tracking$Time_since_dist<0),]$forward.trim),
+           Water=Water.tracking[which(Water.tracking$Time_since_dist<0),]$Non.chimeric.Reads/Water.tracking[which(Water.tracking$Time_since_dist<0),]$Original.Reads,
+           Soil=Soil.tracking[which(Soil.tracking$Time_since_dist<0),]$Non.chimeric.Reads/Soil.tracking[which(Soil.tracking$Time_since_dist<0),]$Original.Reads,
+           Pig=Pig.tracking[which(Pig.tracking$Time_since_dist<0),]$Non.chimeric.Reads/Pig.tracking[which(Pig.tracking$Time_since_dist<0),]$Original.Reads)
+
+preserved.reads =preserved.reads %>% pivot_longer(!readlength, names_to = "Environment", values_to = "Preserved")
+
+
+ggplot(preserved.reads, aes(x=readlength, y=Preserved, color=Environment))+
+  geom_point(size=2)+
+  xlab("Read Length")+
+  ylab("% reads preserved")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  theme_minimal()+
+  facet_wrap(~Environment)
+
+rarefaction.depth=data.frame(readlength=Water.rarefaction$samplename,
+                             Water=Water.rarefaction$depth,
+                             Soil=Soil.rarefaction$depth,
+                             Pig=Pig.rarefaction$depth)
+
+ggplot(rarefaction.depth)+
+  geom_point(aes(x=readlength, y=Water), color="steelblue4", size=2)+
+  geom_point(aes(x=readlength, y=Soil), color="tan4", size=2)+
+  geom_point(aes(x=readlength, y=Pig), color="pink3",size=2)+
+  xlab("Read Length")+
+  ylab("Rarefaction depth")+
+  theme_minimal()
+  
+asvs.detected=data.frame(readlength=as.numeric(Water.rarefaction2$samplename),
+                             Water=Water.rarefaction2$ntaxa,
+                             Soil=Soil.rarefaction2$ntaxa,
+                             Pig=Pig.rarefaction2$ntaxa)
+asvs.detected =asvs.detected %>% pivot_longer(!readlength, names_to = "Environment", values_to = "ASVs")
+
+ggplot(asvs.detected, aes(x=readlength, y=ASVs, color=Environment))+
+  geom_point(size=2)+
+  xlab("Read Length")+
+  ylab("ASVs detected")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  theme_minimal()
+
+
+richness=data.frame(readlength=as.numeric(Water.alpha$samplename),
+                             Water=Water.alpha$richness,
+                             Soil=Soil.alpha$richness,
+                             Pig=Pig.alpha$richness)
+
+Richness =richness %>% pivot_longer(!readlength, names_to = "Environment", values_to = "richness")
+
+Richness.=ggplot(Richness, aes(x=readlength, y=richness, color=Environment))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("Richness")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  facet_wrap(~Environment)+
+  theme_minimal()
+Richness.
+
+
+invsimpson=data.frame(readlength=as.numeric(Water.alpha$samplename),
+                             Water=Water.alpha$simpson,
+                             Soil=Soil.alpha$simpson,
+                             Pig=Pig.alpha$simpson)
+
+Invsimpson =invsimpson %>% pivot_longer(!readlength, names_to = "Environment", values_to = "Invsimpson")
+
+Invsimpson.=ggplot(Invsimpson, aes(x=readlength, y=Invsimpson, color=Environment))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("Inverse Simpson")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  facet_wrap(~Environment)+
+  theme_minimal()
+Invsimpson.
+
+```
+# percent unclassified
+```{r}
+cowplot::plot_grid(Water.Unc, Pig.Unc, Soil.Unc, ncol = 3, labels=c("Water","Animal", "Soil"))
+
+cowplot::plot_grid(Water.Uncp, Pig.Uncp, Soil.Uncp, ncol = 3, labels=c("Water","Animal", "Soil"))
+
+
+```
+#Alpha diversity comparisons
+```{r}
+Water.alphap=read.table("Water/alpha.results.diff.txt")
+Soil.alphap=read.table("Soil/alpha.results.diff.txt")
+Pig.alphap=read.table("Pig/alpha.results.diff.txt")
+
+Richp=data.frame(samplename=Water.alphap$samplename,
+                Water=Water.alphap$richness,
+                 Pig=Pig.alphap$richness,
+                 Soil=Soil.alphap$richness)
+
+Simpsonsp=data.frame(samplename=Water.alphap$samplename,
+                     Water=Water.alphap$simpsons,
+                 Pig=Pig.alphap$simpsons,
+                 Soil=Soil.alphap$simpsons)
+
+Richp =Richp %>% pivot_longer(!samplename, names_to = "Environment", values_to = "Pvalue")
+
+Simpsonsp =Simpsonsp %>% pivot_longer(!samplename, names_to = "Environment", values_to = "Pvalue")
+
+RichnessPs=ggplot(Richp, aes(x=as.numeric(samplename), y=Pvalue, color=Environment))+
+  geom_point(alpha=0.5)+
+  xlab("Read Length")+
+  ylab("P value")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  theme_minimal()
+
+RichnessPs
+
+SimpsonsPs=ggplot(Simpsonsp, aes(x=as.numeric(samplename), y=Pvalue, color=Environment))+
+  geom_point(alpha=0.5)+
+  xlab("Read Length")+
+  ylab("P value")+
+  theme_minimal()+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))
+
+SimpsonsPs
+
+cowplot::plot_grid(RichnessPs, SimpsonsPs)
+```
+
+
+```{r}
+Water.betap=read.table("Water/beta.results.diff.txt")
+Soil.betap=read.table("Soil/beta.results.diff.txt")
+Pig.betap=read.table("Pig/beta.results.diff.txt")
+
+BrayR=data.frame(samplename=Water.betap$samplename,
+                Water=Water.betap$BrayR,
+                 Pig=Pig.betap$BrayR,
+                 Soil=Soil.betap$BrayR)
+
+SorensenR=data.frame(samplename=Water.betap$samplename,
+                Water=Water.betap$SorensenR,
+                 Pig=Pig.betap$SorensenR,
+                 Soil=Soil.betap$SorensenR)
+
+
+BrayR. =BrayR %>% pivot_longer(!samplename, names_to = "Environment", values_to = "R2")
+
+SorensenR. =SorensenR %>% pivot_longer(!samplename, names_to = "Environment", values_to = "R2")
+
+BrayR..=ggplot(BrayR., aes(x=as.numeric(samplename), y=R2, color=Environment))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("R2")+
+  theme_minimal()+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))
+
+SorensenR..=ggplot(SorensenR., aes(x=as.numeric(samplename), y=R2, color=Environment))+
+  geom_point()+
+  xlab("Read Length")+
+  ylab("R2")+
+  theme_minimal()+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))
+
+
+cowplot::plot_grid(SorensenR..,BrayR..)
+```
+
+#Mantel correlogram-Bray
+```{r}
+Water.bray=readRDS("Water/bray.list2.rds")
+Soil.bray=readRDS("Soil/bray.list2.rds")
+Pig.bray=readRDS("Pig/bray.list2.rds")
+
+sample.names=paste0(gsub(".merged.rds", "", names(Water.bray)),"0")
+
+
+Bray.mantel= matrix(ncol = 4, nrow = length(Water.bray))
+colnames(Bray.mantel)<-c("samplename", "Water", "Soil", "Pig")
+
+
+for (i in 1:length(Water.bray)) {
+  W=mantel(Water.bray[[i]], Water.bray[[11]], method=
+             "pearson")$statistic
+    S=mantel(Soil.bray[[i]], Soil.bray[[11]], method=
+             "pearson")$statistic
+      P=mantel(Pig.bray[[i]], Pig.bray[[11]], method=
+             "pearson")$statistic
+       Bray.mantel[i,1]=sample.names[i]
+       Bray.mantel[i,2]=W
+       Bray.mantel[i,3]=S
+       Bray.mantel[i,4]=P
+
+}
+
+Bray.mantel=Bray.mantel[-1,]
+
+Bray.mantel. =as.data.frame(Bray.mantel) %>% pivot_longer(!samplename, names_to = "Environment", values_to = "PearsonsR")
+
+B.mantel=ggplot(Bray.mantel., aes(x=as.numeric(samplename), y=as.numeric(PearsonsR), color=Environment))+
+  geom_point(alpha=0.5)+
+  xlab("Read Length")+
+  ylab("Pearson's R")+
+  ylim(0.6,1)+
+  theme_minimal()+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))
+
+```
+
+
+#Mantel correlogram-Sorensen
+```{r}
+Water.Sorensen=readRDS("Water/Sorensen.list2.rds")
+Soil.Sorensen=readRDS("Soil/Sorensen.list2.rds")
+Pig.Sorensen=readRDS("Pig/Sorensen.list2.rds")
+
+sample.names=paste0(gsub(".merged.rds", "", names(Water.Sorensen)),"0")
+
+
+Sorensen.mantel= matrix(ncol = 4, nrow = length(Water.Sorensen))
+colnames(Sorensen.mantel)<-c("samplename", "Water", "Soil", "Pig")
+
+
+for (i in 1:length(Water.Sorensen)) {
+  W=mantel(Water.Sorensen[[i]], Water.Sorensen[[11]], method=
+             "pearson")$statistic
+    S=mantel(Soil.Sorensen[[i]], Soil.Sorensen[[11]], method=
+             "pearson")$statistic
+      P=mantel(Pig.Sorensen[[i]], Pig.Sorensen[[11]], method=
+             "pearson")$statistic
+       Sorensen.mantel[i,1]=sample.names[i]
+       Sorensen.mantel[i,2]=W
+       Sorensen.mantel[i,3]=S
+       Sorensen.mantel[i,4]=P
+
+}
+
+Sorensen.mantel=Sorensen.mantel[-1,]
+
+Sorensen.mantel. =as.data.frame(Sorensen.mantel) %>% pivot_longer(!samplename, names_to = "Environment", values_to = "PearsonsR")
+
+S.mantel=ggplot(Sorensen.mantel., aes(x=as.numeric(samplename), y=as.numeric(PearsonsR), color=Environment))+
+  geom_point(alpha=0.5)+
+  xlab("Read Length")+
+  ylab("Pearson's R")+
+  ylim(0.6,1)+
+  theme_minimal()+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))
+
+cowplot::plot_grid(B.mantel, S.mantel)
+```
+Without chimera checking
+```{r}
+Water.trackingn=read.table("Water/Nochimtracking_all.txt")
+Pig.trackingn=read.table("Pig/Nochimtracking_all.txt")
+Soil.trackingn=read.table("Soil/Nochimtracking_all.txt")
+
+Water.trackingn$Time_since_dist=Water.meta$Time_since_dist[match(Water.trackingn$row.names, row.names(Water.meta))]
+Pig.trackingn$Time_since_dist=Pig.meta$Time_since_dist[match(Pig.trackingn$row.names, row.names(Pig.meta))]
+Soil.trackingn$Time_since_dist=Soil.meta$Time_since_dist[match(Soil.trackingn$row.names, row.names(Soil.meta))]
+
+filtered.readsn= data.frame(readlength=as.numeric(Water.trackingn[which(Water.trackingn$Time_since_dist<0),]$forward.trim),
+           Water=Water.trackingn[which(Water.trackingn$Time_since_dist<0),]$tabled/Water.trackingn[which(Water.trackingn$Time_since_dist<0),]$Original.Reads,
+           Soil=Soil.trackingn[which(Soil.trackingn$Time_since_dist<0),]$tabled/Soil.trackingn[which(Soil.trackingn$Time_since_dist<0),]$Original.Reads,
+           Pig=Pig.trackingn[which(Pig.trackingn$Time_since_dist<0),]$tabled/Pig.trackingn[which(Pig.trackingn$Time_since_dist<0),]$Original.Reads)
+
+filtered.readsn =filtered.readsn %>% pivot_longer(!readlength, names_to = "Environment", values_to = "Preserved")
+
+
+ggplot(filtered.readsn, aes(x=readlength, y=Preserved, color=Environment))+
+  geom_point(size=2)+
+  xlab("Read Length")+
+  ylab("% reads preserved")+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))+
+  theme_minimal()+
+  facet_wrap(~Environment)
+```
+#NOCHIMERAMantel correlogram-Bray
+```{r}
+Water.bray=readRDS("Water/Nochim/bray.list2.rds")
+Soil.bray=readRDS("Soil/Nochim/bray.list2.rds")
+Pig.bray=readRDS("Pig/Nochim/bray.list2.rds")
+
+sample.names=paste0(gsub(".merged.rds", "", names(Water.bray)),"0")
+
+
+Bray.mantel= matrix(ncol = 4, nrow = length(Water.bray))
+colnames(Bray.mantel)<-c("samplename", "Water", "Soil", "Pig")
+
+
+for (i in 1:length(Water.bray)) {
+  W=mantel(Water.bray[[i]], Water.bray[[11]], method=
+             "pearson")$statistic
+    S=mantel(Soil.bray[[i]], Soil.bray[[11]], method=
+             "pearson")$statistic
+      P=mantel(Pig.bray[[i]], Pig.bray[[11]], method=
+             "pearson")$statistic
+       Bray.mantel[i,1]=sample.names[i]
+       Bray.mantel[i,2]=W
+       Bray.mantel[i,3]=S
+       Bray.mantel[i,4]=P
+
+}
+
+Bray.mantel=Bray.mantel[-1,]
+
+Bray.mantel. =as.data.frame(Bray.mantel) %>% pivot_longer(!samplename, names_to = "Environment", values_to = "PearsonsR")
+
+B.mantel=ggplot(Bray.mantel., aes(x=as.numeric(samplename), y=as.numeric(PearsonsR), color=Environment))+
+  geom_point(alpha=0.5)+
+  xlab("Read Length")+
+  ylab("Pearson's R")+
+  ylim(0.6,1)+
+  theme_minimal()+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))
+
+```
+
+
+#NOCHIMERAMantel correlogram-Sorensen
+```{r}
+Water.Sorensen=readRDS("Water/Nochim/Sorensen.list2.rds")
+Soil.Sorensen=readRDS("Soil/Nochim/Sorensen.list2.rds")
+Pig.Sorensen=readRDS("Pig/Nochim/Sorensen.list2.rds")
+
+sample.names=paste0(gsub(".merged.rds", "", names(Water.Sorensen)),"0")
+
+
+Sorensen.mantel= matrix(ncol = 4, nrow = length(Water.Sorensen))
+colnames(Sorensen.mantel)<-c("samplename", "Water", "Soil", "Pig")
+
+
+for (i in 1:length(Water.Sorensen)) {
+  W=mantel(Water.Sorensen[[i]], Water.Sorensen[[11]], method=
+             "pearson")$statistic
+    S=mantel(Soil.Sorensen[[i]], Soil.Sorensen[[11]], method=
+             "pearson")$statistic
+      P=mantel(Pig.Sorensen[[i]], Pig.Sorensen[[11]], method=
+             "pearson")$statistic
+       Sorensen.mantel[i,1]=sample.names[i]
+       Sorensen.mantel[i,2]=W
+       Sorensen.mantel[i,3]=S
+       Sorensen.mantel[i,4]=P
+
+}
+
+Sorensen.mantel=Sorensen.mantel[-1,]
+
+Sorensen.mantel. =as.data.frame(Sorensen.mantel) %>% pivot_longer(!samplename, names_to = "Environment", values_to = "PearsonsR")
+
+S.mantel=ggplot(Sorensen.mantel., aes(x=as.numeric(samplename), y=as.numeric(PearsonsR), color=Environment))+
+  geom_point(alpha=0.5)+
+  xlab("Read Length")+
+  ylab("Pearson's R")+
+  ylim(0.6,1)+
+  theme_minimal()+
+  scale_color_manual(values=c("pink3", "tan4", "steelblue4"))
+
+cowplot::plot_grid(B.mantel, S.mantel)
+```
